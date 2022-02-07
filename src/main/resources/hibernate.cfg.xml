@@ -1,0 +1,36 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- JDBC Database connection settings -->
+		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/prenotazionebetest?serverTimezone=UTC</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">mysql</property>
+
+		<!-- Dialetto SQL del DB a cui ci colleghiamo -->
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>		
+		<!-- Proprieta' che indica se stampare a console l'SQL generato -->
+		<property name="show_sql">true</property>
+
+		<!-- Scelta della modalita' di aggiornamento dello schema -->
+		<property name="hbm2ddl.auto">update</property>
+
+		<!-- dbcp connection pool configuration -->
+		<property name="hibernate.dbcp.initialSize">5</property>
+		<property name="hibernate.dbcp.maxTotal">20</property>
+		<property name="hibernate.dbcp.maxIdle">10</property>
+		<property name="hibernate.dbcp.minIdle">5</property>
+		<property name="hibernate.dbcp.maxWaitMillis">-1</property>
+
+		<!-- mapping entita' -->
+		<mapping class="com.jac.javadb.domain.entity.Risorsa" />
+	  	<mapping class="com.jac.javadb.domain.entity.Gruppo" />
+	  	<mapping class="com.jac.javadb.domain.entity.Utente" />
+	  	<mapping class="com.jac.javadb.domain.entity.Slot" />
+	  	<mapping class="com.jac.javadb.domain.entity.Prenotazione" />
+
+	</session-factory>
+</hibernate-configuration>
