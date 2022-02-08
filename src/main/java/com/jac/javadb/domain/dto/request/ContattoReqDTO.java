@@ -39,7 +39,6 @@ public class ContattoReqDTO {
 		this.email= email;
 		this.indirizzo= indirizzo;
 		this.telefono=telefono;
-	
 	}
 	
 	public String getNome() {

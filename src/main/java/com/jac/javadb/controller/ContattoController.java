@@ -100,6 +100,7 @@ public class ContattoController {
 			token= token.substring(7);
 			String username= jwtConversion.getUsernameFromToken(token);
 			int userId= userService.getUtenteResByUsername(username).getIdUtente();
+			
 			return ResponseEntity.ok(service.getPaginatedContatti(pageSize, page, contatto, userId));
 			
 		} catch (Exception e) {
@@ -112,9 +113,22 @@ public class ContattoController {
 	
 	/*Cancella Contatto*/
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteContatto(@PathVariable int id){
+	public ResponseEntity<String> deleteContatto(
+			@PathVariable int id,
+			@RequestHeader (name="Authorization") String token){
 		
 		try {
+			
+			token= token.substring(7);
+			String username= jwtConversion.getUsernameFromToken(token);
+			int userId= userService.getUtenteResByUsername(username).getIdUtente();
+			
+			if(!service.checkContattoById(id, userId)) {
+				return ResponseEntity.status(400).body("Unauthorized: puoi cancellare solo i tuoi contatti");
+			}
+		
+			service.deleteContatto(id);
+			
 			return ResponseEntity.ok("Contatto con id= "+id+" eliminato correttamente");
 		}catch(Exception e) {
 			return ResponseEntity.status(400).body("Si è verificato il seguente errore: "+e.getMessage());
@@ -147,7 +161,7 @@ public class ContattoController {
 		
 		try {
 			
-			/* magari dobbiamo rimuovere il BEARER */
+			
 			token= token.substring(7);
 			String username= jwtConversion.getUsernameFromToken(token);
 			int userId= userService.getUtenteResByUsername(username).getIdUtente();

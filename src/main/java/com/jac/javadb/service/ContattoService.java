@@ -38,6 +38,21 @@ public class ContattoService {
 				contattoDB.getFoto());
 	}
 	
+		/*Get Contatto By Id*/
+	 @Transactional(rollbackFor = Exception.class)
+	public boolean checkContattoById( int id, int idUser) {
+		
+		Contatto contattoDB= contattoDao.findItemById(id, Contatto.class);
+		
+		if(contattoDB.getIdUser()==idUser) {
+			return true;
+		}
+		
+		return false;
+	} 
+	 
+	 
+	 
 	/*Get Contatti Paginati e Filtrabili */
 	
 	 @Transactional(rollbackFor = Exception.class)
@@ -132,6 +147,7 @@ public class ContattoService {
 			if(contattoCreate.getIndirizzo()!=null) { contattoDB.setIndirizzo(contattoCreate.getIndirizzo()); }
 			if(contattoCreate.getNome()!=null) { contattoDB.setNome(contattoCreate.getNome());}
 			if(contattoCreate.getTelefono()!=null) {  contattoDB.setTelefono(contattoCreate.getTelefono());}
+			if(contattoCreate.getFoto()!=null) {  contattoDB.setFoto(contattoCreate.getFoto());}
 			contattoDB.setIdUser(idUtente);
 			contattoDB.setUtenteInserimento(username);
 			contattoDB.setDataInserimento(new Date());
